@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+    <project path="device/xiaomi/sweet" name="LineageOS/android_device_xiaomi_sweet" remote="github" revision="lineage-21.0" />
+    <project path="kernel/xiaomi/sm6150" name="LineageOS/android_kernel_xiaomi_sm6150" remote="github" revision="lineage-21.0" />
+    <project path="vendor/xiaomi/sweet" name="TheMuppets/proprietary_vendor_xiaomi" remote="github" revision="lineage-21.0" />
+</manifest>
