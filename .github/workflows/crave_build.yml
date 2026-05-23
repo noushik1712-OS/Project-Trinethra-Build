@@ -1,26 +1,20 @@
-name: Trinethra OS Compilation Engine
-
+name: Trinethra OS Build
 on: [workflow_dispatch]
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Blueprint
-        uses: actions/checkout@v4
-        with:
-          repository: noushik1712-OS/Trinethra-OS-Blueprint
-          token: ${{ secrets.GH_PAT_TOKEN }}
-          path: royalos_source
-
       - name: Setup Crave
         run: |
           curl -s https://raw.githubusercontent.com/accupara/crave/master/get_crave.sh | bash
           sudo mv crave /usr/local/bin/
-
-      - name: Run Build
+      
+      - name: Build OS
+        env:
+          CRAVE_TOKEN: ${{ secrets.CRAVE_TOKEN }}
         run: |
-          crave config set --token ${{ secrets.CRAVE_TOKEN }}
-          crave project init https://github.com/noushik1712-OS/Project-Trinethra-Build
-          # Use a more generic command to verify the environment first
-          crave run --no-patch -- "ls -R royalos_source && source build/envsetup.sh && lunch aosp_arm64-userdebug"
+          crave config set --token $CRAVE_TOKEN
+          # We force the factory to clone your blueprint directly
+          crave clone https://github.com/noushik1712-OS/Trinethra-OS-Blueprint
+          # Now we trigger the build
+          crave run -- "source build/envsetup.sh && lunch aosp_arm64-userdebug && mka bacon"
