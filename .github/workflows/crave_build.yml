@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout RoyalOS Blueprint
+      - name: Checkout Blueprint
         uses: actions/checkout@v3
         with:
           repository: noushik1712-OS/Trinethra-OS-Blueprint
