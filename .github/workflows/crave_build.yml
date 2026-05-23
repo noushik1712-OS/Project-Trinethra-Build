@@ -1,5 +1,6 @@
 name: Trinethra OS Build
 on: [workflow_dispatch]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,8 +14,9 @@ jobs:
         env:
           CRAVE_TOKEN: ${{ secrets.CRAVE_TOKEN }}
         run: |
+          # Set the token
           crave config set --token $CRAVE_TOKEN
-          # We force the factory to clone your blueprint directly
-          crave clone https://github.com/noushik1712-OS/Trinethra-OS-Blueprint
-          # Now we trigger the build
+          # Explicitly initialize the project using the URL
+          crave project init https://github.com/noushik1712-OS/Project-Trinethra-Build
+          # Execute the build directly
           crave run -- "source build/envsetup.sh && lunch aosp_arm64-userdebug && mka bacon"
