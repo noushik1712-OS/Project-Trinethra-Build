@@ -1,19 +1,24 @@
 name: Trinethra OS Compilation Engine
 
-on:
-  workflow_dispatch:
+on: [workflow_dispatch]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout RoyalOS Blueprint
         uses: actions/checkout@v3
+        with:
+          repository: noushik1712-OS/Trinethra-OS-Blueprint
+          token: ${{ secrets.GH_PAT_TOKEN }}
+          path: royalos_source
+
       - name: Setup Crave
         run: |
           curl -s https://raw.githubusercontent.com/accupara/crave/master/get_crave.sh | bash
           sudo mv crave /usr/local/bin/
+
       - name: Run Build
         run: |
           crave config set --token ${{ secrets.CRAVE_TOKEN }}
-          crave run --no-patch -- "repo init -u https://android.googlesource.com/platform/manifest -b android-14.0.0_r1 && repo sync -c -j8 && source build/envsetup.sh && lunch aosp_sweet-userdebug && mka bacon"
+          crave run --no-patch -- "cd royalos_source && source build/envsetup.sh && lunch royal_trinethra-userdebug && mka bacon"
