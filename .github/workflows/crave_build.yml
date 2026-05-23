@@ -21,4 +21,7 @@ jobs:
       - name: Run Build
         run: |
           crave config set --token ${{ secrets.CRAVE_TOKEN }}
+          # Register the project explicitly
+          crave project init https://github.com/noushik1712-OS/Project-Trinethra-Build
+          # Run the build
           crave run --no-patch -- "cd royalos_source && source build/envsetup.sh && lunch royal_trinethra-userdebug && mka bacon"
